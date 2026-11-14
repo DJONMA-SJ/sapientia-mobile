@@ -24,7 +24,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update -y || true
+          sudo apt-get update -y
           sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev zlib1g-dev zip unzip autoconf automake libtool pkg-config cmake
 
       - name: Install Buildozer and Cython
@@ -32,56 +32,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer "cython<3.0.0"
 
-      - name: Locate project and ensure config
+      - name: Find Project and Build
         run: |
-          # Trouver le dossier contenant les scripts Python
-          TARGET_DIR=$(find . -name "main_mobile.py" -o -name "main.py" -exec dirname {} \; | head -n 1)
-          if [ -z "$TARGET_DIR" ]; then
-            TARGET_DIR="."
+          SPEC_FILE=$(find . -name "buildozer.spec" | head -n 1)
+          if [ -n "$SPEC_FILE" ]; then
+            cd $(dirname "$SPEC_FILE")
           fi
-          echo "Dossier du projet : $TARGET_DIR"
-          
-          # Creer main.py si absent
-          if [ ! -f "$TARGET_DIR/main.py" ]; then
-            cat << 'EOF' > "$TARGET_DIR/main.py"
-import os
-import sys
-from main_mobile import SapientiaApp
-
-if __name__ == "__main__":
-    SapientiaApp().run()
-EOF
-          fi
-
-          # Creer buildozer.spec si absent
-          if [ ! -f "$TARGET_DIR/buildozer.spec" ]; then
-            cat << 'EOF' > "$TARGET_DIR/buildozer.spec"
-[app]
-title = Sapientia Mobile
-package.name = sapientiamobile
-package.domain = org.sapientia.app
-source.dir = .
-source.include_exts = py,png,jpg,jpeg,db
-version = 1.0.0
-requirements = python3,kivy,kivymd,sqlite3
-orientation = portrait
-fullscreen = 0
-android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
-android.api = 33
-android.minapi = 24
-android.archs = arm64-v8a
-
-[buildozer]
-log_level = 2
-warn_on_root = 1
-EOF
-          fi
-
-          echo "TARGET_DIR=$TARGET_DIR" >> $GITHUB_ENV
-
-      - name: Build APK with Buildozer
-        run: |
-          cd "$TARGET_DIR"
+          echo "Working in directory: $(pwd)"
           yes | buildozer -v android debug
 
       - name: Upload APK Artifact
