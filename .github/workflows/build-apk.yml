@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
@@ -16,20 +16,27 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Set up Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev openjdk-17-jdk zip unzip autoconf automake libtool libtool-dev pkg-config cmake
+          sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev zip unzip autoconf automake libtool pkg-config cmake
 
-      - name: Install Buildozer & Cython
+      - name: Install Buildozer and Cython
         run: |
+          pip install --upgrade pip
           pip install buildozer "cython<3.0.0"
 
-      - name: Build APK
+      - name: Build APK with Buildozer
         run: |
           yes | buildozer -v android debug
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: sapientia-mobile-apk
