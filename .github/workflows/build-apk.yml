@@ -32,12 +32,23 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer "cython<3.0.0"
 
-      - name: Prepare and Build
+      - name: Prepare Universal Android App
         run: |
           DIR=$(dirname $(find . -name "main_mobile.py" | head -n 1))
           cd "$DIR"
 
-          echo "from main_mobile import SapientiaApp" > main.py
+          echo "import os, sys" > main.py
+          echo "from kivy.utils import platform" >> main.py
+          echo "if platform == 'android':" >> main.py
+          echo "    try:" >> main.py
+          echo "        from android.permissions import request_permissions, Permission" >> main.py
+          echo "        request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])" >> main.py
+          echo "    except Exception:" >> main.py
+          echo "        pass" >> main.py
+          echo "    priv = os.environ.get('ANDROID_PRIVATE', os.path.expanduser('~'))" >> main.py
+          echo "    if priv and os.path.exists(priv):" >> main.py
+          echo "        os.chdir(priv)" >> main.py
+          echo "from main_mobile import SapientiaApp" >> main.py
           echo "if __name__ == '__main__':" >> main.py
           echo "    SapientiaApp().run()" >> main.py
 
@@ -48,13 +59,13 @@ jobs:
           echo "source.dir = ." >> buildozer.spec
           echo "source.include_exts = py,png,jpg,jpeg,db" >> buildozer.spec
           echo "version = 1.0.0" >> buildozer.spec
-          echo "requirements = python3,kivy,kivymd,sqlite3" >> buildozer.spec
+          echo "requirements = python3,kivy,kivymd,pillow,sqlite3" >> buildozer.spec
           echo "orientation = portrait" >> buildozer.spec
           echo "fullscreen = 0" >> buildozer.spec
           echo "android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE" >> buildozer.spec
           echo "android.api = 33" >> buildozer.spec
-          echo "android.minapi = 24" >> buildozer.spec
-          echo "android.archs = arm64-v8a" >> buildozer.spec
+          echo "android.minapi = 21" >> buildozer.spec
+          echo "android.archs = arm64-v8a, armeabi-v7a" >> buildozer.spec
           echo "" >> buildozer.spec
           echo "[buildozer]" >> buildozer.spec
           echo "log_level = 2" >> buildozer.spec
