@@ -32,50 +32,34 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer "cython<3.0.0"
 
-      - name: Prepare Clean Spec and Main
+      - name: Prepare and Build
         run: |
-          python3 -c "
-          import os, glob
+          DIR=$(dirname $(find . -name "main_mobile.py" | head -n 1))
+          cd "$DIR"
 
-          # Trouver le dossier du projet mobile
-          files = glob.glob('**/main_mobile.py', recursive=True) or glob.glob('**/buildozer.spec', recursive=True)
-          target_dir = os.path.dirname(files[0]) if files else '.'
-          os.chdir(target_dir)
-          print('Configuration dans le dossier:', os.getcwd())
+          echo "from main_mobile import SapientiaApp" > main.py
+          echo "if __name__ == '__main__':" >> main.py
+          echo "    SapientiaApp().run()" >> main.py
 
-          # Generer main.py propre
-          with open('main.py', 'w', encoding='utf-8') as f:
-              f.write('from main_mobile import SapientiaApp\nif __name__ == \"__main__\":\n    SapientiaApp().run()\n')
+          echo "[app]" > buildozer.spec
+          echo "title = Sapientia Mobile" >> buildozer.spec
+          echo "package.name = sapientiamobile" >> buildozer.spec
+          echo "package.domain = org.sapientia.app" >> buildozer.spec
+          echo "source.dir = ." >> buildozer.spec
+          echo "source.include_exts = py,png,jpg,jpeg,db" >> buildozer.spec
+          echo "version = 1.0.0" >> buildozer.spec
+          echo "requirements = python3,kivy,kivymd,sqlite3" >> buildozer.spec
+          echo "orientation = portrait" >> buildozer.spec
+          echo "fullscreen = 0" >> buildozer.spec
+          echo "android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE" >> buildozer.spec
+          echo "android.api = 33" >> buildozer.spec
+          echo "android.minapi = 24" >> buildozer.spec
+          echo "android.archs = arm64-v8a" >> buildozer.spec
+          echo "" >> buildozer.spec
+          echo "[buildozer]" >> buildozer.spec
+          echo "log_level = 2" >> buildozer.spec
+          echo "warn_on_root = 1" >> buildozer.spec
 
-          # Forcer un buildozer.spec minimal et fonctionnel
-          spec = '''[app]
-title = Sapientia Mobile
-package.name = sapientiamobile
-package.domain = org.sapientia.app
-source.dir = .
-source.include_exts = py,png,jpg,jpeg,db
-version = 1.0.0
-requirements = python3,kivy,kivymd,sqlite3
-orientation = portrait
-fullscreen = 0
-android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
-android.api = 33
-android.minapi = 24
-android.archs = arm64-v8a
-
-[buildozer]
-log_level = 2
-warn_on_root = 1
-'''
-          with open('buildozer.spec', 'w', encoding='utf-8') as f:
-              f.write(spec)
-          "
-
-      - name: Build APK with Buildozer
-        run: |
-          TARGET_DIR=$(python3 -c "import os, glob; files = glob.glob('**/main_mobile.py', recursive=True); print(os.path.dirname(files[0]) if files else '.')")
-          cd "$TARGET_DIR"
-          echo "Lancement de Buildozer dans: $(pwd)"
           yes | buildozer -v android debug
 
       - name: Upload APK Artifact
