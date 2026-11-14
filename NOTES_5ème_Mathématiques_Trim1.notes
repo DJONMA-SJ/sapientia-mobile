@@ -1,0 +1,226 @@
+{
+  "classe_id": 2,
+  "classe_nom": "5ème",
+  "matiere_cible_id": null,
+  "pin_code": "1234",
+  "matieres": [
+    {
+      "id": 1,
+      "nom": "Littérature Française",
+      "coef": 5.0,
+      "prof": "Mme AISSATOU"
+    },
+    {
+      "id": 2,
+      "nom": "Langue Française",
+      "coef": 2.0,
+      "prof": "M. NDOUGA"
+    },
+    {
+      "id": 3,
+      "nom": "Anglais",
+      "coef": 4.0,
+      "prof": "M. YAGAÏ"
+    },
+    {
+      "id": 4,
+      "nom": "Mathématiques",
+      "coef": 5.0,
+      "prof": "M. FABAÏTANÉ"
+    },
+    {
+      "id": 5,
+      "nom": "Physique",
+      "coef": 3.0,
+      "prof": "M. KOUMTCHAK"
+    },
+    {
+      "id": 6,
+      "nom": "EPS",
+      "coef": 2.0,
+      "prof": "M. BOUBA"
+    }
+  ],
+  "eleves": [
+    {
+      "id": 1,
+      "matricule": "241042425",
+      "nom": "AMINATOU SOUAIBOU",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 12.0,
+            "seq2": null
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "matricule": "241323086",
+      "nom": "BELL SANA MIKE WILLIAM'S",
+      "prenom": "",
+      "sexe": "M",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 19.0,
+            "seq2": null
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "matricule": "241042563",
+      "nom": "DJUIDJE EMÉRANCE LABELLE",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 10.0,
+            "seq2": 12.0
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "matricule": "241041549",
+      "nom": "FAOUZIA ABDOURAMAN BEN-NAZIR",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 5.0,
+            "seq2": 5.0
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "matricule": "241042746",
+      "nom": "HABIBA",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 15.0,
+            "seq2": 13.0
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "matricule": "241734782",
+      "nom": "HYAKADAM VAGAÏ  LOUANGE EDWIGE",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 10.0,
+            "seq2": 5.0
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "matricule": "241041876",
+      "nom": "ISMAËL IBRAHIM ASSOUWALAÏ",
+      "prenom": "",
+      "sexe": "M",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 0.0,
+            "seq2": 2.0
+          }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "matricule": "241041909",
+      "nom": "KALNIGA YINDA JUNIOR",
+      "prenom": "",
+      "sexe": "M",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 13.0,
+            "seq2": 14.0
+          }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "matricule": "240604272",
+      "nom": "MERCI ALLAWADI JUIF",
+      "prenom": "",
+      "sexe": "M",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 14.0,
+            "seq2": 13.0
+          }
+        }
+      }
+    },
+    {
+      "id": 10,
+      "matricule": "241048245",
+      "nom": "PADAMA MEKOMPOMO JOHAN",
+      "prenom": "",
+      "sexe": "M",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 5.0,
+            "seq2": 11.0
+          }
+        }
+      }
+    },
+    {
+      "id": 11,
+      "matricule": "241286748",
+      "nom": "RAMLATOU ASSOUWALAÏ AN'NOURA",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 3.0,
+            "seq2": 10.0
+          }
+        }
+      }
+    },
+    {
+      "id": 12,
+      "matricule": "241042236",
+      "nom": "TOUCK LAKOUDJI YENDE URIELLE",
+      "prenom": "",
+      "sexe": "F",
+      "notes": {
+        "1": {
+          "Mathématiques": {
+            "seq1": 0.0,
+            "seq2": 7.0
+          }
+        }
+      }
+    }
+  ]
+}
